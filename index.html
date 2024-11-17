@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>OPlayer Example</title>
+
+  <!-- Link to OPlayer CSS -->
+  <link rel="stylesheet" href="https://raw.githubusercontent.com/shiyiya/oplayer/refs/heads/main/packages/docs/public/oplayer.css">
+
+  <!-- Custom CSS for Play Button and Progress Bar -->
+  <style>
+    /* Gradient play button */
+    [aria-label='Play'][type='button']::before {
+      content: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Crect width='24' height='24' fill='none'/%3E%3Cpath fill='%231e90ff' fill-rule='evenodd' d='M12 22c5.523 0 10-4.477 10-10S17.523 2 12 2S2 6.477 2 12s4.477 10 10 10' clip-rule='evenodd' opacity='0.4'/%3E%3Cpath fill='%231e90ff' d='m15.414 13.059l-4.72 2.787C9.934 16.294 9 15.71 9 14.786V9.214c0-.924.934-1.507 1.694-1.059l4.72 2.787c.781.462.781 1.656 0 2.118'/%3E%3C/svg%3E");
+      width: 4rem;
+      height: 4rem;
+      display: block;
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      flex-shrink: 0;
+      background: linear-gradient(135deg, #1e90ff, #4b8df8); /* Gradient background */
+      border-radius: 50%;
+      padding: 10px;
+    }
+
+    /* Customize progress bar */
+    .oplayer .oplayer-progress-bar {
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .oplayer .oplayer-progress-filled {
+      background: #1e90ff; /* Solid blue */
+    }
+
+    .oplayer .oplayer-progress-handle {
+      background-color: #1e90ff;
+      border: 2px solid #ffffff;
+    }
+
+    /* Font and Spinner styles */
+    @font-face {
+      font-family: 'Grotesk';
+      font-style: normal;
+      font-weight: 400 700;
+      font-display: swap;
+      src: url(SpaceGrotesk.woff2) format('woff2');
+    }
+
+    * {
+      box-sizing: border-box;
+      font-family: 'Grotesk', sans-serif;
+      color: #f0f8ff;
+      outline: 0 !important;
+      letter-spacing: 0.02em;
+    }
+
+    .spinner-container {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      text-align: center;
+      z-index: 1000;
+      display: none;
+    }
+
+    .spinner {
+      width: 50px;
+      height: 50px;
+      border: 5px solid rgba(255, 255, 255, 0.3);
+      border-top: 5px solid #fff;
+      border-radius: 50%;
+      animation: 1s linear infinite spin;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    body, html {
+      background-color: rgba(0, 0, 0, 0.95);
+      margin: 0;
+      padding: 0;
+      width: 100vw;
+      height: 100vh;
+      overflow: hidden;
+    }
+
+    #oplayer {
+      width: 100% !important;
+      height: 100% !important;
+      background-color: #000;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Player Container -->
+  <div id="oplayer"></div>
+
+  <!-- OPlayer Scripts -->
+  <script src="https://cdn.jsdelivr.net/npm/@oplayer/core@latest/dist/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@oplayer/ui@latest/dist/index.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@oplayer/hls@latest/dist/index.min.js"></script>
+
+  <script>
+    // OPlayer Configuration
+    OPlayer.make('#oplayer', {
+      source: {
+        title: '君の名は',
+        src: 'https://zelvonstar19.pro/file1/1R48TC3PusI5T~aC3N4LHtpFoyhwjoEPPJAn6EGv1mLaBFiDe39W+T8QP5ky0BP0ed9Gy6fV~C93UhSDeCZi+WBITLmGGB9+WatUOAhX1XL9HgtsmsYgJk65GFJ7nLNx1TF9GjjvePC1dI4iLb4igc5aQVsMQa8NYFX4l8AHnHY=/MTA4MA==/aW5kZXgubTN1OA==.m3u8',
+        poster: 'https://cdn.jsdelivr.net/gh/shiyiya/QI-ABSL@master/o/poster.png',
+        format: 'auto'
+      },
+      muted: true,
+      autoplay: false,
+      loop: false,
+      volume: 0.5,
+      preload: 'metadata',
+      playsinline: true
+    })
+    .use([
+      OUI(),
+      OHls({
+        forceHLS: true,
+        library: 'https://cdn.jsdelivr.net/npm/hls.js@0.14.17/dist/hls.min.js'
+      })
+    ])
+    .create()
+  </script>
+</body>
+</html>
